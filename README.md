@@ -26,6 +26,10 @@ Breakpoint 1: where = python.exe`main + 22 at python.c:16:25, address = 0x000000
 ### Module
 A module is a file that groups related functionality, data and classes.
 Every source code file, .py, is a module.
+You can see where a module is located by simply using print:
+```python
+print(qiskit)
+```
 
 ### Package
 A package groups modules.
@@ -60,6 +64,84 @@ $ nm build/lib.macosx-10.7-x86_64-3.7/hellomodule.cpython-37m-darwin.so
 0000000000000e70 T _inithellomodule
 0000000000001020 d _module_functions
                  U dyld_stub_binder
+```
+
+### Conda
+Is a package/environment management system, like npm I guess.
+This is the package manager for Anaconda.
+This will use a virtual environment to allow for separation of versions. Note
+that there is a `virtualenv/venv` built into Python 3.
+
+To create a new virtual environment with a specific python version:
+```console
+conda create --name python3-env python=3.7 -y
+```
+
+To use this environemnt:
+```console
+$ conda activate python3-env
+(python3-env) $
+```
+See what environments are available:
+```console
+$ conda info --envs
+# conda environments:
+#
+base                  *  /anaconda3
+Qiskitenv                /anaconda3/envs/Qiskitenv
+python3-env              /anaconda3/envs/python3-env
+```
+
+Remove:
+```console
+$ conda remove --name pyton3-env --all
+
+
+### virtualenv/venv
+
+
+### Debugging
+```console
+$ python3 -m pdb source.py
+```
+
+
+### lint
+I ran into the following issue:
+```console
+(Qiskitenv) $ pylint -rn test
+Traceback (most recent call last):
+  File "/Users/danielbevenius/miniconda3/envs/Qiskitenv/bin/pylint", line 10, in <module>
+    sys.exit(run_pylint())
+  File "/Users/danielbevenius/miniconda3/envs/Qiskitenv/lib/python3.7/site-packages/pylint/__init__.py", line 17, in run_pylint
+    from pylint.lint import Run
+  File "/Users/danielbevenius/miniconda3/envs/Qiskitenv/lib/python3.7/site-packages/pylint/lint.py", line 76, in <module>
+    import astroid
+  File "/Users/danielbevenius/miniconda3/envs/Qiskitenv/lib/python3.7/site-packages/astroid/__init__.py", line 166, in <module>
+    __import__(module[:-3])
+  File "/Users/danielbevenius/miniconda3/envs/Qiskitenv/lib/python3.7/site-packages/astroid/brain/brain_builtin_inference.py", line 15, in <module>
+    import six
+ModuleNotFoundError: No module named 'six'
+```
+But the module `six` was installed. Uninstaling and installing again worked:
+```console
+$ pip uninstall six
+$ pip install six
+```
+
+### __init__.py
+There are two types of packages in Python, regular and namespace packages.
+
+A regular package is typically implemented as a directory containing an 
+__init__.py file. When a regular package is imported, this __init__.py file
+is implicitly executed, and the objects it defines are bound to names in the
+package’s namespace. 
+
+
+### qiskit
+```console
+$ conda activate python3-env
+(python3-env) $ /anaconda3/envs/python3-env/bin/pip install qiskit
 ```
 
 
@@ -131,3 +213,4 @@ Python 3.7.1
 $ python3-config --includes
 -I/anaconda3/include/python3.7m -I/anaconda3/include/python3.7m
 ```
+
