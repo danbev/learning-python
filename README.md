@@ -49,6 +49,47 @@ example_package.one(  example_package.two(
 >>> example_package.one()
 one function
 ```
+### Class
+
+### Double Under(dunder)/Magic methods
+There are methods that are named with double underscores, hence sometimes called
+dunder methods. For example, we can implement class and add a method named 
+`__getitem__` which will allow an instance of that class to access a member
+using array index syntax, instance[index].
+
+#### __str__
+This is used when you pass an instance to `print`. An example can be found 
+in [src/str.py].
+
+So, how does this actually work. Lets try to debug this:
+```console
+$ python3 -m pdb src/str.py
+(Pdb) longlist
+  6  ->	    def __str__(self):
+  7  	        return 'Something(name=' + self.name + ')'
+(Pdb) bt
+  /usr/local/Cellar/python/3.7.3/Frameworks/Python.framework/Versions/3.7/lib/python3.7/bdb.py(585)run()
+-> exec(cmd, globals, locals)
+  <string>(1)<module>()
+  /Users/danielbevenius/work/python/learning-python/src/str.py(13)<module>()
+-> print(s);
+> /Users/danielbevenius/work/python/learning-python/src/str.py(6)__str__()
+-> def __str__(self):
+```
+So that does not really help much, it only looks like we called our __str__
+function straight away.
+
+
+#### __repr__
+This is used when you want to display information about the instance in the
+REPL:
+```console
+$ PYTHONPATH=./src python3
+>>> import str
+>>> l = str.Something("bajja")
+>>> l
+Something(name=bajja)
+
 
 ### Native modules
 ```console
