@@ -32,7 +32,23 @@ print(qiskit)
 ```
 
 ### Package
-A package groups modules.
+A package groups modules. What gets exposed to a user when they import a package
+is controlled by the __init__.py file in the package.
+
+Take a look at [example_package](src/example_package) and you'll find it has
+a `__init__.py` that exposes one function from the one module (but does not
+expose the second function in it). This can be used by:
+```console
+$ PYTHONPATH=./src python3
+Python 3.7.3 (default, Jun 19 2019, 07:38:49)
+[Clang 10.0.1 (clang-1001.0.46.4)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import example_package
+>>> example_package.
+example_package.one(  example_package.two(
+>>> example_package.one()
+one function
+```
 
 ### Native modules
 ```console
