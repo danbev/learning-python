@@ -102,6 +102,12 @@ running example_package using the directory
 ```
 
 
+### pass
+You can use the `pass` statement if you don't want to implement something. For
+example, I was looking for a way to implement a class but just having a name for
+it (in a test/example that is). Using pass allowed this, [pass](src/pass.py) is
+an example of using this.
+
 ### Native modules
 ```console
 $ cd src/somethingmodule
