@@ -91,6 +91,17 @@ $ PYTHONPATH=./src python3
 Something(name=bajja)
 
 
+### __main__.py
+Adding a file name `__main__.py` to a directory allows you to run code in the
+package by just using the directory name. This could also be a zip file which
+might of more value.
+
+```console
+$ python3 src/example_package/
+running example_package using the directory
+```
+
+
 ### Native modules
 ```console
 $ cd src/somethingmodule
