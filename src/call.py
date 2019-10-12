@@ -1,5 +1,13 @@
+"""This is the module info
+bla
+bla
+bla
+
+"""
 class Something:
-    def __call__(self, msg):
+    """Some class documentation"""
+    def __call__(self, msg: str):
+        """some method documentation"""
         print(msg)
 
 s = Something()

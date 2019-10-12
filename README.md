@@ -106,6 +106,49 @@ $ python3 src/example_package/
 running example_package using the directory
 ```
 
+### Documentation
+2gt
+
+
+```console
+>>> help (call)
+Help on module call:
+
+NAME
+    call
+
+CLASSES
+    builtins.object
+        Something
+
+    class Something(builtins.object)
+     |  Some class documentation
+     |
+     |  Methods defined here:
+     |
+     |  __call__(self, msg)
+     |      some method documentation
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+DATA
+    s = <call.Something object>
+
+FILE
+    /Users/danielbevenius/work/python/learning-python/src/call.py
+
+```
+Help can be used on classes within a module as well:
+```console
+>>> help(call.Something)
+```
 
 ### pass
 You can use the `pass` statement if you don't want to implement something. For
