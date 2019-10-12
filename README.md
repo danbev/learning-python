@@ -91,6 +91,11 @@ $ PYTHONPATH=./src python3
 Something(name=bajja)
 
 
+#### __call__
+This method allow us to make an instance callable. See [call.py](src/call.py) 
+for an example.
+
+
 ### __main__.py
 Adding a file name `__main__.py` to a directory allows you to run code in the
 package by just using the directory name. This could also be a zip file which
@@ -107,6 +112,34 @@ You can use the `pass` statement if you don't want to implement something. For
 example, I was looking for a way to implement a class but just having a name for
 it (in a test/example that is). Using pass allowed this, [pass](src/pass.py) is
 an example of using this.
+
+### tokenize
+```console
+$ python3 -m tokenize -e src/pass.py
+0,0-0,0:            ENCODING       'utf-8'
+1,0-1,5:            NAME           'class'
+1,6-1,15:           NAME           'Something'
+1,15-1,16:          COLON          ':'
+1,16-1,17:          NEWLINE        '\n'
+2,0-2,4:            INDENT         '    '
+2,4-2,8:            NAME           'pass'
+2,8-2,9:            NEWLINE        '\n'
+3,0-3,1:            NL             '\n'
+4,0-4,0:            DEDENT         ''
+4,0-4,1:            NAME           's'
+4,2-4,3:            EQUAL          '='
+4,4-4,13:           NAME           'Something'
+4,13-4,14:          LPAR           '('
+4,14-4,15:          RPAR           ')'
+4,15-4,16:          NEWLINE        '\n'
+5,0-5,5:            NAME           'print'
+5,5-5,6:            LPAR           '('
+5,6-5,7:            NAME           's'
+5,7-5,8:            RPAR           ')'
+5,8-5,9:            SEMI           ';'
+5,9-5,10:           NEWLINE        '\n'
+6,0-6,0:            ENDMARKER      ''
+```
 
 ### Native modules
 ```console
