@@ -364,3 +364,17 @@ $ python3-config --includes
 -I/anaconda3/include/python3.7m -I/anaconda3/include/python3.7m
 ```
 
+
+### disasemble
+```console
+$ PYTHONPATH=src python3
+>>> import dis
+>>> import disasemble
+>>> dis.dis(disasemble.something)
+  3           0 LOAD_GLOBAL              0 (print)
+              2 LOAD_CONST               1 ('bajja')
+              4 CALL_FUNCTION            1
+              6 POP_TOP
+              8 LOAD_CONST               0 (None)
+             10 RETURN_VALUE
+```
