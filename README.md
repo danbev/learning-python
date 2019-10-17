@@ -378,3 +378,21 @@ $ PYTHONPATH=src python3
               8 LOAD_CONST               0 (None)
              10 RETURN_VALUE
 ```
+
+### lambda
+An example can be found in [lambda.py](src/lambda.py). 
+Notice that the only difference is the `<function <lambda> at ` compared to
+`<function function_name at` for a normal function.
+```console
+<class 'function'>
+  4           0 LOAD_GLOBAL              0 (print)
+              2 LOAD_FAST                0 (s)
+              4 CALL_FUNCTION            1
+              6 RETURN_VALUE
+<function <lambda> at 0x1081fc268>
+```
+This can be important to know when looking at a stack trace.
+
+A lambda function can’t contain any statements. In a lambda function, statements
+like return, pass, assert, or raise will raise a SyntaxError exception.
+
