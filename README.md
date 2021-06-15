@@ -59,7 +59,7 @@ using array index syntax, instance[index].
 
 #### __str__
 This is used when you pass an instance to `print`. An example can be found 
-in [src/str.py].
+in [str.py](src/str.py).
 
 So, how does this actually work. Lets try to debug this:
 ```console
