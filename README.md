@@ -107,8 +107,6 @@ running example_package using the directory
 ```
 
 ### Documentation
-2gt
-
 
 ```console
 >>> help (call)
