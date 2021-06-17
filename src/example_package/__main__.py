@@ -1,1 +1,1 @@
-print("running example_package using the directory")
+print("__main__.py: running example_package using the directory")

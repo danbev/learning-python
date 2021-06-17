@@ -103,7 +103,7 @@ might of more value.
 
 ```console
 $ python3 src/example_package/
-running example_package using the directory
+__main__.py: running example_package using the directory
 ```
 
 ### Documentation
