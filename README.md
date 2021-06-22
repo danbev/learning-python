@@ -32,8 +32,11 @@ print(qiskit)
 ```
 
 ### Package
-A package groups modules. What gets exposed to a user when they import a package
-is controlled by the __init__.py file in the package.
+A package groups modules. A regular package is usually implemented as a
+directory containing an `__init__.py` file. When a package gets imported this
+file is executed.
+What gets exposed to a user when they import a package is controlled by the
+`__init__.py~ file in the package.
 
 Take a look at [example_package](src/example_package) and you'll find it has
 a `__init__.py` that exposes one function from the one module (but does not
