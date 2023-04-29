@@ -25,3 +25,13 @@ Notice that the version of python and pip and the binaries in the venv:
 /home/danielbevenius/work/python/learning-python/venv/bin/python
 ```
 
+#### Install packages
+```console
+$ python -m pip install <package-name>
+```
+I think packages will be installed into the directory named after the
+virtual environment specified (venv above):
+```
+venv/lib/python3.11/site-packages/
+```
+
