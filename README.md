@@ -397,3 +397,19 @@ This can be important to know when looking at a stack trace.
 A lambda function can’t contain any statements. In a lambda function, statements
 like return, pass, assert, or raise will raise a SyntaxError exception.
 
+
+### Installing a package locally
+```console
+$ pip install .
+```
+It should now be possible to use this package
+
+```console
+$ python3 -m <package-name>
+```
+
+Another option might be to run the module directly:
+```console
+$ python3 ~/work/wasm/wasmtime-py/wasmtime/bindgen ../seedwing_policy-engine-component.wasm --out-dir dist
+```
+
