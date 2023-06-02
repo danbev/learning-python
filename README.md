@@ -413,3 +413,16 @@ Another option might be to run the module directly:
 $ python3 ~/work/wasm/wasmtime-py/wasmtime/bindgen ../seedwing_policy-engine-component.wasm --out-dir dist
 ```
 
+
+### kwargs
+I came accross this when looking at [Dense class](https://keras.io/api/layers/core_layers/dense/)
+and could not find one of the input parameters that I was using:
+```python3
+dense = Dense(units=1, input_shape=[1])
+```
+In this case `input_shape` is not part of the named parameters that the classes
+constructor (is that the correct term in Python?) takes.
+
+In python one can pass multiple parameter to a function using `*args`. An
+example can be found in [args.py](./src/args.py). The `*` here is the
+`unpacking` operator.
