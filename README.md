@@ -426,3 +426,6 @@ constructor (is that the correct term in Python?) takes.
 In python one can pass multiple parameter to a function using `*args`. An
 example can be found in [args.py](./src/args.py). The `*` here is the
 `unpacking` operator.
+
+Now, `**kwargs` is similar to `*args` but allows for a dictionary (named values)
+to be passed in.
