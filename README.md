@@ -443,3 +443,9 @@ The `-s` will print output and is the same as specifying:
 $ pytest --capture=no tests/codegen/test_empty_import.py
 ```
 
+### mypy
+Mypy is a static type-checking tool for Python. It analyzes Python programs and
+provides static type checking, which means it checks the types of variables, 
+function parameters, return values, and expressions at compile-time, without 
+actually executing the code.
+
