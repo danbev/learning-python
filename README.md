@@ -429,3 +429,17 @@ example can be found in [args.py](./src/args.py). The `*` here is the
 
 Now, `**kwargs` is similar to `*args` but allows for a dictionary (named values)
 to be passed in.
+
+
+### Running Tests
+
+To run a single test, a file that may contain multiple tests) one can specify
+the file as an argument:
+```console
+$ pytest -s tests/codegen/test_empty_import.py
+```
+The `-s` will print output and is the same as specifying:
+```console
+$ pytest --capture=no tests/codegen/test_empty_import.py
+```
+
