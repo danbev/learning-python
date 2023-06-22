@@ -449,3 +449,5 @@ provides static type checking, which means it checks the types of variables,
 function parameters, return values, and expressions at compile-time, without 
 actually executing the code.
 
+### flake8
+Is like a linter and a static analysis tool (think Clippy).
