@@ -402,7 +402,12 @@ like return, pass, assert, or raise will raise a SyntaxError exception.
 ```console
 $ pip install .
 ```
-It should now be possible to use this package
+A project can also be installed as `editable` using the `-e` option:
+```console
+$ pip install -e .
+```
+
+It should now be possible to use this package.
 
 ```console
 $ python3 -m <package-name>
