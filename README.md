@@ -456,3 +456,25 @@ actually executing the code.
 
 ### flake8
 Is like a linter and a static analysis tool (think Clippy).
+
+
+### Create virtual environment with venv
+```console
+$ python3 -m venv tf 
+```
+
+## Activate the environment
+```console
+$ source tf/bin/activate
+```
+
+## Install requirements
+```console
+$ source tf/bin/activate
+(tf) pip install -r requirements.txt
+```
+
+Run pip freeze to generate a requirements.txt file to check in.
+```console
+(tf) $ pip freeze > requirements.txt
+```
