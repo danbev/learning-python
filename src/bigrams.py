@@ -1,6 +1,7 @@
 import urllib
 import requests
 import pprint
+import torch
 
 """
 words = urllib.request.urlopen('https://raw.githubusercontent.com/karpathy/makemore/master/names.txt'
@@ -27,4 +28,43 @@ for w in words:
     b[bigram] = b.get(bigram, 0) + 1
 
 sorted_embeddings = sorted(b.items(), key = lambda kv: -kv[1])
-pprint.pprint(sorted_embeddings)
+#pprint.pprint(sorted_embeddings)
+
+N = torch.zeros((27, 27), dtype=torch.int32)
+
+all_letters = ''.join(words)
+chars = set(all_letters)
+chars = sorted(list(set(all_letters)))
+print(f'nr of unique_letters: {len(chars)}')
+print(chars)
+
+stoi = {ch: i+1 for i, ch in enumerate(chars)}
+stoi['.'] = 0
+itos = {i: ch for ch, i in stoi.items()}
+print(itos)
+print(stoi)
+
+for w in words:
+  chs = ['.'] + list(w) + ['.']
+  for ch1, ch2 in zip(chs, chs[1:]):
+    ix1 = stoi[ch1]
+    ix2 = stoi[ch2]
+    N[ix1, ix2] += 1
+
+import matplotlib.pyplot as plt
+#plt.imshow(N)
+plt.show()
+
+
+plt.figure(figsize=(16,16))
+plt.imshow(N, cmap='Blues')
+for i in range(27):
+    for j in range(27):
+        chstr = itos[i] + itos[j]
+        plt.text(j, i, chstr, ha="center", va="bottom", color='gray')
+        plt.text(j, i, N[i, j].item(), ha="center", va="top", color='gray')
+plt.axis('off');
+plt.show()
+
+print(f'An entry in N is a Tensor: {type(N[2,2])}')
+print(f'Use .item() to get the value: {N[2,2].item()}')
