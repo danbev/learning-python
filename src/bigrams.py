@@ -61,7 +61,7 @@ for i in range(27):
         plt.text(j, i, chstr, ha="center", va="bottom", color='gray')
         plt.text(j, i, N[i, j].item(), ha="center", va="top", color='gray')
 plt.axis('off');
-plt.show()
+#plt.show()
 
 print(f'An entry in N is a Tensor: {type(N[2,2])}')
 print(f'Use .item() to get the value: {N[2,2].item()}')
@@ -82,6 +82,9 @@ print(f'sampled index: {idx}')
 sampled_char = itos[idx]
 print(f'sampled character: {sampled_char}')
 # So in this case we sampled the character 'j' from the distribution p.
-print(f'Number of words starging with {sampled_char}: {N[0][idx]}')
-#plt.show()
+print(f'Number of words starting with {sampled_char}: {N[0][idx]} (out of {N[0].sum()})')
+# These words are the ones starting with '.j' in the matplot lib figure.
+# So j is the first character in the word, and then we "move" to the row with
+# row 'j.' to get the characters that are preceded by j.
+print(f'Row for .{sampled_char}: {N[idx].tolist()} , max:{N[idx].max()}')
 
