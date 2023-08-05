@@ -90,11 +90,14 @@ print(f'Row for .{sampled_char}: {N[idx].tolist()} , max:{N[idx].max()}')
 # Now we want to sample from this row for the next character which will follow
 # the character 'j' in the word that starts with 'j'.
 #
-idx = 0
-while True:
-    p = N[idx].float()
-    p = p / p.sum()
-    idx = torch.multinomial(p, num_samples=1, replacement=True, generator=g).item()
-    print(itos[idx])
-    if idx == 0:
-        break
+for i in range(20):
+    output = []
+    idx = 0
+    while True:
+        p = N[idx].float()
+        p = p / p.sum()
+        idx = torch.multinomial(p, num_samples=1, replacement=True, generator=g).item()
+        output.append(itos[idx])
+        if idx == 0:
+            break
+    print(f"Generated: {''.join(output)}")
