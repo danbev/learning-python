@@ -71,6 +71,7 @@ p = N[0].float()
 p = p / p.sum()
 print(f'to floats: {p}')
 print(p.sum())
+print(p.shape)
 
 g = torch.Generator().manual_seed(18)
 #p = torch.rand(3, generator=g)
@@ -96,6 +97,9 @@ for i in range(20):
     while True:
         p = N[idx].float()
         p = p / p.sum()
+        # We can verify that the model is actually trained despite the output
+        # being mostly gibberish and not looking like real names.
+        #p = torch.ones(27)/27.0 # untrained model
         idx = torch.multinomial(p, num_samples=1, replacement=True, generator=g).item()
         output.append(itos[idx])
         if idx == 0:
