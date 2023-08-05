@@ -19,7 +19,6 @@ print(len(words))
 print(min(len(w) for w in words))
 print(max(len(w) for w in words))
 
-
 b = {}
 for w in words:
   chs = ['<S>'] + list(w) + ['<E>']
@@ -41,8 +40,6 @@ print(chars)
 stoi = {ch: i+1 for i, ch in enumerate(chars)}
 stoi['.'] = 0
 itos = {i: ch for ch, i in stoi.items()}
-print(itos)
-print(stoi)
 
 for w in words:
   chs = ['.'] + list(w) + ['.']
@@ -64,7 +61,21 @@ for i in range(27):
         plt.text(j, i, chstr, ha="center", va="bottom", color='gray')
         plt.text(j, i, N[i, j].item(), ha="center", va="top", color='gray')
 plt.axis('off');
-plt.show()
+#plt.show()
 
 print(f'An entry in N is a Tensor: {type(N[2,2])}')
 print(f'Use .item() to get the value: {N[2,2].item()}')
+p = N[0]
+print(f'convert from integers: {p}')
+p = N[0].float()
+p = p / p.sum()
+print(f'to floats: {p}')
+print(p.sum())
+
+g = torch.Generator().manual_seed(2147483647)
+#p = torch.rand(3, generator=g)
+#p = p / p.sum()
+idx = torch.multinomial(p, num_samples=1, replacement=True, generator=g).item()
+print(f'sampled index: {idx}')
+print(f'sampled character: {itos[idx]}')
+
