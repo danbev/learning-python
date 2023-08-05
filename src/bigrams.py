@@ -87,4 +87,14 @@ print(f'Number of words starting with {sampled_char}: {N[0][idx]} (out of {N[0].
 # So j is the first character in the word, and then we "move" to the row with
 # row 'j.' to get the characters that are preceded by j.
 print(f'Row for .{sampled_char}: {N[idx].tolist()} , max:{N[idx].max()}')
-
+# Now we want to sample from this row for the next character which will follow
+# the character 'j' in the word that starts with 'j'.
+#
+idx = 0
+while True:
+    p = N[idx].float()
+    p = p / p.sum()
+    idx = torch.multinomial(p, num_samples=1, replacement=True, generator=g).item()
+    print(itos[idx])
+    if idx == 0:
+        break
