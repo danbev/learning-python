@@ -4,6 +4,7 @@ import pprint
 import torch
 import matplotlib.pyplot as plt
 
+# The following is just the code used to download the names.txt file.
 """
 words = urllib.request.urlopen('https://raw.githubusercontent.com/karpathy/makemore/master/names.txt'
     ).read().decode('utf-8').splitlines()
@@ -14,40 +15,37 @@ with open('names.txt', 'w') as f:
         f.write(word + '\n')
 """
 
+print("Reading names.text...")
 words = open('names.txt', 'r').read().splitlines()
 print(f'First 10 names: {words[:10]}')
 print(f'Number of names: {len(words)}')
 print(f'Shortest name: {min(len(w) for w in words)}')
 print(f'Longest name: {max(len(w) for w in words)}')
 
-b = {}
-for w in words:
-  chs = ['<S>'] + list(w) + ['<E>']
-  for ch1, ch2 in zip(chs, chs[1:]):
-    bigram = (ch1, ch2)
-    b[bigram] = b.get(bigram, 0) + 1
-
-sorted_embeddings = sorted(b.items(), key = lambda kv: -kv[1])
-#pprint.pprint(sorted_embeddings)
-
-N = torch.zeros((27, 27), dtype=torch.int32)
-
 all_letters = ''.join(words)
-chars = set(all_letters)
 chars = sorted(list(set(all_letters)))
-print(f'nr of unique_letters: {len(chars)}')
-print(f'chars: {chars}')
+print(f'nr of unique characters: {len(chars)}')
+print(f'characters: {chars}')
 
+# string/char to integer function.
 stoi = {ch: i+1 for i, ch in enumerate(chars)}
 stoi['.'] = 0
+# integer to string/char function.
 itos = {i: ch for ch, i in stoi.items()}
 
-for w in words:
-  chs = ['.'] + list(w) + ['.']
+# Create an empty matrix of size 27x27 with all zeros.
+N = torch.zeros((27, 27), dtype=torch.int32)
+
+for word in words:
+  chs = ['.'] + list(word) + ['.']
   for ch1, ch2 in zip(chs, chs[1:]):
     ix1 = stoi[ch1]
     ix2 = stoi[ch2]
     N[ix1, ix2] += 1
+print('------------------------------------------')
+print(f'N contains the integer representations of the bigrams.')
+print(f'For example: {N[0]=}')
+print(f'N[0][0]: {N[0][0]}, itos[N[0][0]]: "{itos[N[0][0].item()]}"')
 
 #plt.imshow(N)
 #plt.show()
@@ -66,12 +64,13 @@ plt.axis('off');
 print(f'An entry in N is a Tensor: {type(N[2,2])}')
 print(f'Use .item() to get the value: {N[2,2].item()}')
 p = N[0]
-print(f'convert from integers: {p}')
+print(f'convert from integers:\n{p}')
 p = N[0].float()
 p = p / p.sum()
-print(f'to floats: {p}')
+print(f'to floats:\n{p}')
 print(f'p.sum(): {p.sum()}')
 print(f'p.shape: {p.shape}')
+print('------------------------------------------')
 
 g = torch.Generator().manual_seed(18)
 #p = torch.rand(3, generator=g)
@@ -101,6 +100,7 @@ print(f'P.sum: {P.sum(dim=1, keepdim=True).shape}')
 print(f'P.sum: {P.sum(dim=1, keepdim=True)}')
 P /= P.sum(dim=1, keepdim=True)
 print(f'P[0].sum: {P[0].sum()}')
+print('------------------------------------------')
 
 for i in range(5):
     output = []
@@ -121,6 +121,7 @@ for i in range(5):
 # So the current model is not very impressive and the following section will
 # try to improve it.
 log_likelihood = 0.0
+bigrams_count = 0
 for word in words[0:3]:
   chs = ['.'] + list(word) + ['.']
   print(f'word: {word}')
@@ -130,8 +131,10 @@ for word in words[0:3]:
     prob = P[ix1, ix2]
     logprob = torch.log(prob)
     log_likelihood += logprob
+    bigrams_count += 1
     print(f'bigram: {ch1}{ch2} prob: {prob:.4f}, {prob*100:.2f}%, logprob: {logprob:.4f}')
 
+print(f'{bigrams_count=}')
 print(f'We have 27 possible characters, so the probability of a random guess is 1/27 = {1/27:.4f}, {1/27*100:.2f}%')
 # So we have the probablilties of all the bigrams but we want to get a single
 # number for all the probabilities so that we can determine how well the model
@@ -143,4 +146,11 @@ negative_log_likelihood = -log_likelihood
 # be negative, so we take the negative of the log likelihood and then we can
 # try to minimize this loss function so a larger value is worse and a smaller
 # value is better.
-print(f'{negative_log_likelihood=}')
+print(f'sum of negative_log_likelihood: {negative_log_likelihood}')
+avg_nll = negative_log_likelihood / bigrams_count
+print(f'average of negative_log_likelihood: {avg_nll}')
+# The goal of training is to minimize the average negative log likelihood. This
+# is done by modifying the parameters of the model. The parameters of the model
+# are the values in the matrix N which we can inspect visually in the matplotlib
+# figure. These are currently stored in table.
+plt.show()
