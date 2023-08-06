@@ -118,10 +118,29 @@ for i in range(5):
             break
     print(f"Generated: {''.join(output)}")
 
-for w in words[0:3]:
-  chs = ['.'] + list(w) + ['.']
+# So the current model is not very impressive and the following section will
+# try to improve it.
+log_likelihood = 0.0
+for word in words[0:3]:
+  chs = ['.'] + list(word) + ['.']
+  print(f'word: {word}')
   for ch1, ch2 in zip(chs, chs[1:]):
     ix1 = stoi[ch1]
     ix2 = stoi[ch2]
     prob = P[ix1, ix2]
-    print(f'{ch1}{ch2} prob: {prob:.4f}')
+    logprob = torch.log(prob)
+    log_likelihood += logprob
+    print(f'bigram: {ch1}{ch2} prob: {prob:.4f}, {prob*100:.2f}%, logprob: {logprob:.4f}')
+
+print(f'We have 27 possible characters, so the probability of a random guess is 1/27 = {1/27:.4f}, {1/27*100:.2f}%')
+# So we have the probablilties of all the bigrams but we want to get a single
+# number for all the probabilities so that we can determine how well the model
+# is doing.
+# Self documenting expression example:
+print(f'{log_likelihood=}')
+negative_log_likelihood = -log_likelihood
+# To use the log likelihood as a loss function we want don't want to have it
+# be negative, so we take the negative of the log likelihood and then we can
+# try to minimize this loss function so a larger value is worse and a smaller
+# value is better.
+print(f'{negative_log_likelihood=}')
