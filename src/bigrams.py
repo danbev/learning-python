@@ -24,50 +24,58 @@ print(f'Longest name: {max(len(w) for w in words)}')
 
 all_letters = ''.join(words)
 chars = sorted(list(set(all_letters)))
-print(f'nr of unique characters: {len(chars)}')
-print(f'characters: {chars}')
+print(f'Number of unique characters: {len(chars)}')
+print(f'Characters:\n{chars}')
 
-# string/char to integer function.
+# string to integer dictionary.
 stoi = {ch: i+1 for i, ch in enumerate(chars)}
 stoi['.'] = 0
-# integer to string/char function.
+# integer to string dictionary.
 itos = {i: ch for ch, i in stoi.items()}
 
+print('------------------------------------------')
 # Create an empty matrix of size 27x27 with all zeros.
 N = torch.zeros((27, 27), dtype=torch.int32)
-
 for word in words:
   chs = ['.'] + list(word) + ['.']
   for ch1, ch2 in zip(chs, chs[1:]):
     ix1 = stoi[ch1]
     ix2 = stoi[ch2]
     N[ix1, ix2] += 1
-print('------------------------------------------')
 print(f'N contains the integer representations of the bigrams.')
-print(f'For example: {N[0]=}')
-print(f'N[0][0]: {N[0][0]}, itos[N[0][0]]: "{itos[N[0][0].item()]}"')
+print(f'For example:\n{N[0]=}')
+print(f'Inspect N[0][0]: {N[0][0]} (int), itos[N[0][0]]: "{itos[N[0][0].item()]}"')
 
 #plt.imshow(N)
 #plt.show()
 
 
-plt.figure(figsize=(16,16), dpi=80)
-plt.imshow(N, cmap='Blues')
+fig = plt.figure(figsize=(16,16), dpi=80)
+fig.suptitle('Bigram Table')
+# Display data as an image, i.e., on a 2D regular raster.
+image_axis = plt.imshow(N, cmap='Blues')
+print('Bigram Table lables (not showing counts):')
 for i in range(27):
     for j in range(27):
         chstr = itos[i] + itos[j]
+        print(chstr, ' ', end='', flush=True)
+        #print(N[i, j].item(), ' ', end='', flush=True)
         plt.text(j, i, chstr, ha="center", va="bottom", color='gray')
         plt.text(j, i, N[i, j].item(), ha="center", va="top", color='gray')
+    print("", flush=True)
 plt.axis('off');
 #plt.show()
 
+print(f'N.shape: {N.shape}')
 print(f'An entry in N is a Tensor: {type(N[2,2])}')
-print(f'Use .item() to get the value: {N[2,2].item()}')
+print(f'We can .item() to get the count for any label above.')
+print(f'For example N[1][1].item(): {N[1][1].item()}')
 p = N[0]
-print(f'convert from integers:\n{p}')
+print(f'Notice that the values in N integers. For example the values in the first row are:\n{N[0]}')
+print(f'We need to convert them to floats:\n{p}')
 p = N[0].float()
 p = p / p.sum()
-print(f'to floats:\n{p}')
+print(f'After conversion:\n{p}')
 print(f'p.sum(): {p.sum()}')
 print(f'p.shape: {p.shape}')
 print('------------------------------------------')
