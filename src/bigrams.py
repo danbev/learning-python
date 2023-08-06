@@ -15,10 +15,10 @@ with open('names.txt', 'w') as f:
 """
 
 words = open('names.txt', 'r').read().splitlines()
-print(words[:10])
-print(len(words))
-print(min(len(w) for w in words))
-print(max(len(w) for w in words))
+print(f'First 10 names: {words[:10]}')
+print(f'Number of names: {len(words)}')
+print(f'Shortest name: {min(len(w) for w in words)}')
+print(f'Longest name: {max(len(w) for w in words)}')
 
 b = {}
 for w in words:
@@ -36,7 +36,7 @@ all_letters = ''.join(words)
 chars = set(all_letters)
 chars = sorted(list(set(all_letters)))
 print(f'nr of unique_letters: {len(chars)}')
-print(chars)
+print(f'chars: {chars}')
 
 stoi = {ch: i+1 for i, ch in enumerate(chars)}
 stoi['.'] = 0
@@ -70,8 +70,8 @@ print(f'convert from integers: {p}')
 p = N[0].float()
 p = p / p.sum()
 print(f'to floats: {p}')
-print(p.sum())
-print(p.shape)
+print(f'p.sum(): {p.sum()}')
+print(f'p.shape: {p.shape}')
 
 g = torch.Generator().manual_seed(18)
 #p = torch.rand(3, generator=g)
@@ -91,12 +91,24 @@ print(f'Row for .{sampled_char}: {N[idx].tolist()} , max:{N[idx].max()}')
 # Now we want to sample from this row for the next character which will follow
 # the character 'j' in the word that starts with 'j'.
 #
-for i in range(20):
+
+print(f'p.sum: {p.sum()}')
+P = N.float()
+print(f'P.sum: {P.sum()} (sum of all counts of all of the names in N)')
+# This is not what we want, we want to normalize each row separately.
+print(f'P.shape: {P.shape}')
+print(f'P.sum: {P.sum(dim=1, keepdim=True).shape}')
+print(f'P.sum: {P.sum(dim=1, keepdim=True)}')
+P /= P.sum(dim=1, keepdim=True)
+print(f'P[0].sum: {P[0].sum()}')
+
+for i in range(5):
     output = []
     idx = 0
     while True:
-        p = N[idx].float()
-        p = p / p.sum()
+        p = P[idx]
+        #p = N[idx].float()
+        #p = p / p.sum()
         # We can verify that the model is actually trained despite the output
         # being mostly gibberish and not looking like real names.
         #p = torch.ones(27)/27.0 # untrained model
@@ -105,3 +117,11 @@ for i in range(20):
         if idx == 0:
             break
     print(f"Generated: {''.join(output)}")
+
+for w in words[0:3]:
+  chs = ['.'] + list(w) + ['.']
+  for ch1, ch2 in zip(chs, chs[1:]):
+    ix1 = stoi[ch1]
+    ix2 = stoi[ch2]
+    prob = P[ix1, ix2]
+    print(f'{ch1}{ch2} prob: {prob:.4f}')
