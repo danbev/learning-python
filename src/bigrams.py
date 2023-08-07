@@ -107,7 +107,8 @@ print(f'Row for .{sampled_char}: {N[idx].tolist()} , max:{N[idx].max()}')
 #
 
 print(f'p.sum: {p.sum()}')
-P = N.float()
+# The +1 here is to avoid division by zero and called smoothing.
+P = (N+1).float()
 print(f'P.sum: {P.sum()} (sum of all counts of all of the names in N)')
 # This is not what we want, we want to normalize each row separately.
 print(f'P.shape: {P.shape}')
@@ -137,7 +138,13 @@ for i in range(5):
 # try to improve it.
 log_likelihood = 0.0
 bigrams_count = 0
-for word in words[0:3]:
+# The following word will produce a negative_log_likelihood of infinity because
+# a z followed by a q occurs zero times, zero count in the N matrix. This will
+# be the case for all counts that have a zero count. This can be addressed with
+# something called smoothing.
+for word in ["danielzq"]:
+#for word in words[0:3]:
+#for word in words:
   chs = ['.'] + list(word) + ['.']
   print(f'word: {word}')
   for ch1, ch2 in zip(chs, chs[1:]):
@@ -163,7 +170,7 @@ negative_log_likelihood = -log_likelihood
 # value is better.
 print(f'sum of negative_log_likelihood: {negative_log_likelihood}')
 avg_nll = negative_log_likelihood / bigrams_count
-print(f'average of negative_log_likelihood: {avg_nll}')
+print(f'average of negative_log_likelihood: {avg_nll} which indicates the quality of the model')
 # The goal of training is to minimize the average negative log likelihood. This
 # is done by modifying the parameters of the model. The parameters of the model
 # are the values in the matrix N which we can inspect visually in the matplotlib
