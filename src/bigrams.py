@@ -3,6 +3,10 @@ import requests
 import pprint
 import torch
 import matplotlib.pyplot as plt
+"""
+A bigram or digram is a sequence of two adjacent elements from a string of
+tokens.
+"""
 
 # The following is just the code used to download the names.txt file.
 """
@@ -37,10 +41,13 @@ print('------------------------------------------')
 # Create an empty matrix of size 27x27 with all zeros.
 N = torch.zeros((27, 27), dtype=torch.int32)
 for word in words:
+  # Add bigrams for word
   chs = ['.'] + list(word) + ['.']
   for ch1, ch2 in zip(chs, chs[1:]):
+    # the bigrams are added as integers.
     ix1 = stoi[ch1]
     ix2 = stoi[ch2]
+    # Add an increment the bigram count.
     N[ix1, ix2] += 1
 print(f'N contains the integer representations of the bigrams.')
 print(f'For example:\n{N[0]=}')
@@ -49,10 +56,10 @@ print(f'Inspect N[0][0]: {N[0][0]} (int), itos[N[0][0]]: "{itos[N[0][0].item()]}
 #plt.imshow(N)
 #plt.show()
 
-
+# We can use matplotlib to display the bigram table.
 fig = plt.figure(figsize=(16,16), dpi=80)
 fig.suptitle('Bigram Table')
-# Display data as an image, i.e., on a 2D regular raster.
+# Display data as an image (imshow), i.e., on a 2D regular raster.
 image_axis = plt.imshow(N, cmap='Blues')
 print('Bigram Table lables (not showing counts):')
 for i in range(27):
@@ -146,8 +153,8 @@ print(f'{bigrams_count=}')
 print(f'We have 27 possible characters, so the probability of a random guess is 1/27 = {1/27:.4f}, {1/27*100:.2f}%')
 # So we have the probablilties of all the bigrams but we want to get a single
 # number for all the probabilities so that we can determine how well the model
-# is doing.
-# Self documenting expression example:
+# is working.
+# Self documenting expression example (the '=') below
 print(f'{log_likelihood=}')
 negative_log_likelihood = -log_likelihood
 # To use the log likelihood as a loss function we want don't want to have it
@@ -160,5 +167,10 @@ print(f'average of negative_log_likelihood: {avg_nll}')
 # The goal of training is to minimize the average negative log likelihood. This
 # is done by modifying the parameters of the model. The parameters of the model
 # are the values in the matrix N which we can inspect visually in the matplotlib
-# figure. These are currently stored in table.
+# figure. These are currently stored in table and are counts of the number of
+# times a character is followed by another character. Recall that we got these
+# numbers by reading the names.txt file, and then we loop over all the names
+# create bigrams for them, mapping the tokens to integers. These integers are
+# then added to the matrix N and the counts for the bigram is incremented if it
+# already exists in the matrix N.
 plt.show()
