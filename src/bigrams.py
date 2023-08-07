@@ -195,5 +195,20 @@ print(f'average of negative_log_likelihood: {avg_nll} which indicates the qualit
 # numbers by reading the names.txt file, and then we loop over all the names
 # create bigrams for them, mapping the tokens to integers. These integers are
 # then added to the matrix N and the counts for the bigram is incremented if it
-# already exists in the matrix N.
+# already exists in the matrix N. We then converted this matrix N to a matrix P
+# and normalized the row.
 plt.show()
+# If the negative log likelihood gets lower the model is improving and is giving
+# better probabilities
+
+
+# In this case we have "trained" the model by looking at the counts of all the
+# bigrams, and we converted those integers into floats and then normalized those
+# rows of floats to get probability distributions, and stored them in matrix P
+# (for parameters perhaps?).
+# We could then use this matrix P to generate new names by sampling from it.
+# And then we could evaluate the quality of the model by computing the
+# negative log likelihood comparing it. The lower the negative log likelihood is
+# the better our model is at givng high probablities to the actual next
+# characters in names.
+# 
