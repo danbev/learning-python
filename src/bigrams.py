@@ -57,9 +57,9 @@ print(f'Inspect N[0][0]: {N[0][0]} (int), itos[N[0][0]]: "{itos[N[0][0].item()]}
 #plt.show()
 
 # We can use matplotlib to display the bigram table.
-fig = plt.figure(figsize=(16,16), dpi=80)
+fig = plt.figure(figsize=(16,16), dpi=100)
 fig.suptitle('Bigram Table')
-# Display data as an image (imshow), i.e., on a 2D regular raster.
+## Display data as an image (imshow), i.e., on a 2D regular raster.
 image_axis = plt.imshow(N, cmap='Blues')
 print('Bigram Table lables (not showing counts):')
 for i in range(27):
@@ -114,8 +114,24 @@ print(f'P.sum: {P.sum()} (sum of all counts of all of the names in N)')
 print(f'P.shape: {P.shape}')
 print(f'P.sum: {P.sum(dim=1, keepdim=True).shape}')
 print(f'P.sum: {P.sum(dim=1, keepdim=True)}')
+print(f'P[10][17]: {P[10][17].item()} (before normalization)')
+print(f'P.sum(): {P.sum(dim=1, keepdim=True)}')
 P /= P.sum(dim=1, keepdim=True)
 print(f'P[0].sum: {P[0].sum()}')
+print(f'P[10][17]: {P[10][17].item()} (after normalization)')
+
+#import math
+#image_axis = plt.imshow(P, cmap='Blues')
+#for i in range(27):
+#    for j in range(27):
+#        chstr = itos[i] + itos[j]
+#        print(chstr, ' ', end='', flush=True)
+#        #print(N[i, j].item(), ' ', end='', flush=True)
+#        plt.text(j, i, chstr, ha="center", va="bottom", color='gray')
+#        plt.text(j, i, float(f'{P[i, j].item():.4f}'), ha="center", va="top", color='gray')
+#    print("", flush=True)
+#plt.axis('off');
+
 print('------------------------------------------')
 
 for i in range(5):
@@ -142,11 +158,11 @@ bigrams_count = 0
 # a z followed by a q occurs zero times, zero count in the N matrix. This will
 # be the case for all counts that have a zero count. This can be addressed with
 # something called smoothing.
-for word in ["danielzq"]:
+#for word in ["danielzq"]:
 #for word in words[0:3]:
-#for word in words:
+for word in words:
   chs = ['.'] + list(word) + ['.']
-  print(f'word: {word}')
+  #print(f'word: {word}')
   for ch1, ch2 in zip(chs, chs[1:]):
     ix1 = stoi[ch1]
     ix2 = stoi[ch2]
@@ -154,7 +170,7 @@ for word in ["danielzq"]:
     logprob = torch.log(prob)
     log_likelihood += logprob
     bigrams_count += 1
-    print(f'bigram: {ch1}{ch2} prob: {prob:.4f}, {prob*100:.2f}%, logprob: {logprob:.4f}')
+    #print(f'bigram: {ch1}{ch2} prob: {prob:.4f}, {prob*100:.2f}%, logprob: {logprob:.4f}')
 
 print(f'{bigrams_count=}')
 print(f'We have 27 possible characters, so the probability of a random guess is 1/27 = {1/27:.4f}, {1/27*100:.2f}%')
