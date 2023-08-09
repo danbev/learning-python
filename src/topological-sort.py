@@ -4,6 +4,10 @@ import matplotlib.pyplot as plt
 
 class Graph:
     def __init__(self, n):
+        # Default dictionary is similar to a normal dictionary except that it
+        # has a default value if a key has not been assigned a value. S in this
+        # case list is the factor function and if index being added does not
+        # exist then it will create a new list.
         self.graph = defaultdict(list)
         self.N = n
 
